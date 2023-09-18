@@ -43,12 +43,17 @@ class TelaBase extends JFrame implements ActionListener {
         BuscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
+                JFileChooser folderChooser = new JFileChooser();
+                folderChooser.setDialogTitle("Selecionar Pasta");
+                folderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                int returnValue = folderChooser.showOpenDialog(null);
 
-                int returnValue = fileChooser.showOpenDialog(null);
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    textField.setText(selectedFile.getAbsolutePath());
+                    // O usuário selecionou um diretório
+                    String selectedFolderPath = folderChooser.getSelectedFile().getAbsolutePath();
+                    textField.setText(selectedFolderPath);
+                } else {
+                    System.out.println("Nenhum diretório selecionado.");
                 }
             }
         });
