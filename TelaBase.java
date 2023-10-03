@@ -1,10 +1,9 @@
-package teste;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-class TelaBase extends JFrame implements ActionListener {
+public class TelaBase extends JFrame implements ActionListener {
     private JTextField textField;
 
     public TelaBase() {
@@ -26,10 +25,10 @@ class TelaBase extends JFrame implements ActionListener {
 
         JButton TesteButton = new JButton("Testar");
         TesteButton.setBounds(260, 70, 70, 20);
-        TesteButton.addActionListener(e -> new FacaAqui());
+        TesteButton.addActionListener(e -> buscarAndroidManifest());
         TelaTestar.add(TesteButton);
 
-        String texto = "Selecione o arquivo que deseja testar:";
+        String texto = "Selecione a pasta que deseja testar:";
         JLabel label = new JLabel(texto);
         label.setBounds(20, 5, 500, 20);
         TelaTestar.add(label);
@@ -62,6 +61,32 @@ class TelaBase extends JFrame implements ActionListener {
         TelaTestar.add(textField);
 
         return TelaTestar;
+    }
+    //buscando o arquivo manifest
+    private void buscarAndroidManifest() {
+        String selectedFolderPath = textField.getText();
+        if (!selectedFolderPath.isEmpty()) {
+            File folder = new File(selectedFolderPath);
+            File[] files = folder.listFiles();
+
+            if (files != null) {
+                boolean manifestFound = false;
+                for (File file : files) {
+                    if (file.isFile() && file.getName().equalsIgnoreCase("TESTEMANIFEST.xml")) {
+                        manifestFound = true;
+                        System.out.println("Arquivo AndroidManifest.xml encontrado em: " + file.getAbsolutePath());
+                        break;
+                    }
+                }
+                if (!manifestFound) {
+                    JOptionPane.showMessageDialog(this, "Nenhum arquivo AndroidManifest.xml encontrado na pasta selecionada.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "A pasta selecionada está vazia.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, selecione uma pasta antes de buscar o arquivo AndroidManifest.xml.");
+        }
     }
 
     public static void main(String[] args) {
