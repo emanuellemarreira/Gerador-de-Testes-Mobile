@@ -1,3 +1,5 @@
+package teste;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,7 +9,7 @@ public class TelaBase extends JFrame implements ActionListener {
     private JTextField textField;
 
     public TelaBase() {
-        setTitle("TESTE MOBILE");
+        setTitle("Gerador de testes para aplicativos mobile");
         setBounds(300, 300, 600, 150);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -23,12 +25,12 @@ public class TelaBase extends JFrame implements ActionListener {
         JPanel TelaTestar = new JPanel();
         TelaTestar.setLayout(null);
 
-        JButton TesteButton = new JButton("Testar");
-        TesteButton.setBounds(260, 70, 70, 20);
+        JButton TesteButton = new JButton("Gerar testes");
+        TesteButton.setBounds(260, 70, 100, 20);
         TesteButton.addActionListener(e -> buscarAndroidManifest());
         TelaTestar.add(TesteButton);
 
-        String texto = "Selecione a pasta que deseja testar:";
+        String texto = "Selecione a pasta do aplicativo:";
         JLabel label = new JLabel(texto);
         label.setBounds(20, 5, 500, 20);
         TelaTestar.add(label);
@@ -72,9 +74,10 @@ public class TelaBase extends JFrame implements ActionListener {
             if (files != null) {
                 boolean manifestFound = false;
                 for (File file : files) {
-                    if (file.isFile() && file.getName().equalsIgnoreCase("TESTEMANIFEST.xml")) {
+                    if (file.isFile() && file.getName().equalsIgnoreCase("AndroidManifest.xml")) {
                         manifestFound = true;
                         System.out.println("Arquivo AndroidManifest.xml encontrado em: " + file.getAbsolutePath());
+                        GfgXmlExtractor.pegarmanifest(file.getAbsolutePath());
                         break;
                     }
                 }
