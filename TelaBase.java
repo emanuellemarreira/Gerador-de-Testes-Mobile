@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class TelaBase extends JFrame implements ActionListener {
     private JTextField textField;
@@ -44,14 +45,18 @@ public class TelaBase extends JFrame implements ActionListener {
         BuscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser folderChooser = new JFileChooser();
-                folderChooser.setDialogTitle("Selecionar Pasta");
-                folderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                int returnValue = folderChooser.showOpenDialog(null);
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setDialogTitle("Selecionar Pasta");
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos XML", "xml");
+                fileChooser.setFileFilter(filter);
+
+                int returnValue = fileChooser.showOpenDialog(null);
 
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    // O usuário selecionou um diretório
-                    String selectedFolderPath = folderChooser.getSelectedFile().getAbsolutePath();
+                    // O usuário selecionou um arquivo
+                    String selectedFolderPath = fileChooser.getSelectedFile().getAbsolutePath();
                     textField.setText(selectedFolderPath);
                 } else {
                     System.out.println("Nenhum diretório selecionado.");
