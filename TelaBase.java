@@ -8,6 +8,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class TelaBase extends JFrame implements ActionListener {
     private JTextField textField;
+    String selectedFolderPath;
 
     public TelaBase() {
         setTitle("Gerador de testes para aplicativos mobile");
@@ -28,10 +29,17 @@ public class TelaBase extends JFrame implements ActionListener {
 
         JButton TesteButton = new JButton("Gerar testes");
         TesteButton.setBounds(260, 70, 100, 20);
-        TesteButton.addActionListener(e -> buscarAndroidManifest());
+        TesteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(selectedFolderPath == null){
+                    JOptionPane.showMessageDialog(null, "Nenhum diretório selecionado.");
+                }
+            }
+        });
         TelaTestar.add(TesteButton);
 
-        String texto = "Selecione a pasta do aplicativo:";
+        String texto = "Selecione o arquivo AndroidManifest.xml do seu aplicativo:";
         JLabel label = new JLabel(texto);
         label.setBounds(20, 5, 500, 20);
         TelaTestar.add(label);
@@ -40,13 +48,13 @@ public class TelaBase extends JFrame implements ActionListener {
         textField.setBounds(20, 30, 470, 20);
         textField.setEditable(false);
 
-        JButton BuscarButton = new JButton("Buscar");
-        BuscarButton.setBounds(500, 30, 70, 20);
+        JButton BuscarButton = new JButton("Selecionar");
+        BuscarButton.setBounds(500, 30, 100, 20);
         BuscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Selecionar Pasta");
+                fileChooser.setDialogTitle("Selecionar AndroidManifest.xml");
                 fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos XML", "xml");
@@ -56,10 +64,11 @@ public class TelaBase extends JFrame implements ActionListener {
 
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
                     // O usuário selecionou um arquivo
-                    String selectedFolderPath = fileChooser.getSelectedFile().getAbsolutePath();
+                    selectedFolderPath = fileChooser.getSelectedFile().getAbsolutePath();
+                    GfgXmlExtractor.pegarmanifest(selectedFolderPath);
                     textField.setText(selectedFolderPath);
                 } else {
-                    System.out.println("Nenhum diretório selecionado.");
+                    JOptionPane.showMessageDialog(null, "Nenhum diretório selecionado.");
                 }
             }
         });
@@ -70,7 +79,7 @@ public class TelaBase extends JFrame implements ActionListener {
         return TelaTestar;
     }
     //buscando o arquivo manifest
-    private void buscarAndroidManifest() {
+   /* private void buscarAndroidManifest() {
         String selectedFolderPath = textField.getText();
         if (!selectedFolderPath.isEmpty()) {
             File folder = new File(selectedFolderPath);
@@ -95,7 +104,7 @@ public class TelaBase extends JFrame implements ActionListener {
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, selecione uma pasta antes de buscar o arquivo AndroidManifest.xml.");
         }
-    }
+    }*/
 
     public static void main(String[] args) {
         try {
