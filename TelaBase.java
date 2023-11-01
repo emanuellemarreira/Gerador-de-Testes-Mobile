@@ -12,7 +12,7 @@ public class TelaBase extends JFrame implements ActionListener {
 
     public TelaBase() {
         setTitle("Gerador de testes para aplicativos mobile");
-        setBounds(300, 300, 600, 150);
+        setBounds(300, 300, 650, 150);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,7 +28,7 @@ public class TelaBase extends JFrame implements ActionListener {
         TelaTestar.setLayout(null);
 
         JButton TesteButton = new JButton("Gerar testes");
-        TesteButton.setBounds(260, 70, 100, 20);
+        TesteButton.setBounds(270, 70, 100, 25);
         TesteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -45,11 +45,11 @@ public class TelaBase extends JFrame implements ActionListener {
         TelaTestar.add(label);
 
         textField = new JTextField();
-        textField.setBounds(20, 30, 470, 20);
+        textField.setBounds(20, 30, 490, 20);
         textField.setEditable(false);
 
         JButton BuscarButton = new JButton("Selecionar");
-        BuscarButton.setBounds(500, 30, 100, 20);
+        BuscarButton.setBounds(520, 29, 100, 22);
         BuscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
