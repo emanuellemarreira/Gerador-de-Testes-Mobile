@@ -1,14 +1,21 @@
 package teste;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TelaBase extends JFrame implements ActionListener {
+
     private JTextField textField;
     String selectedFolderPath;
+
+
 
     public TelaBase() {
         setTitle("Gerador de testes para aplicativos mobile");
@@ -34,10 +41,13 @@ public class TelaBase extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 if(selectedFolderPath == null){
                     JOptionPane.showMessageDialog(null, "Nenhum diretório selecionado.");
+                } else {
+                    extrairPermissoesDoManifest(selectedFolderPath);
                 }
             }
         });
         TelaTestar.add(TesteButton);
+
 
         String texto = "Selecione o arquivo AndroidManifest.xml do seu aplicativo:";
         JLabel label = new JLabel(texto);
@@ -65,7 +75,7 @@ public class TelaBase extends JFrame implements ActionListener {
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
                     // O usuário selecionou um arquivo
                     selectedFolderPath = fileChooser.getSelectedFile().getAbsolutePath();
-                    GfgXmlExtractor.pegarmanifest(selectedFolderPath);
+                    //GfgXmlExtractor.pegarmanifest(selectedFolderPath);
                     textField.setText(selectedFolderPath);
                 } else {
                     JOptionPane.showMessageDialog(null, "Nenhum diretório selecionado.");
@@ -106,6 +116,48 @@ public class TelaBase extends JFrame implements ActionListener {
         }
     }*/
 
+    private void extrairPermissoesDoManifest(String caminhoManifest) {
+        List<String> permissoes = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(caminhoManifest))) {
+            String linha;
+            // loop que lê cada linha do arquivo
+            while ((linha = br.readLine()) != null) {
+                if (linha.contains("android.permission.")) {
+                    int startIndex = linha.indexOf("android.permission.") + "android.permission.".length();
+                    int endIndex = linha.indexOf("\"", startIndex);
+                    if (endIndex > startIndex) {
+                        String permissao = linha.substring(startIndex, endIndex);
+                        permissoes.add(permissao);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (permissoes.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhuma permissão encontrada no arquivo AndroidManifest.xml.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Permissões encontradas: " + String.join(", ", permissoes));
+            /////////////////////////////////////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////A PARTIR DAQUI//////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////////////////////////////////////
+            //SwingUtilities.invokeLater(() -> new telaDeTeste());
+        }
+    }
+
+    /*private void gerarTextoTeste(List<String> permissoes) {
+        for (String permissao : permissoes) {
+            if (permissao.equals("INTERNET")) {
+                JOptionPane.showMessageDialog(this, "Permissões encontradas: " + String.join(", ", permissoes) +
+                        "\nPré-requisito: Wifi desligado\n" +
+                        "Teste: Acessar app com 4G\n" +
+                        "Resultados esperados: Páginas, transições e informações serem carregadas normalmente");
+            }
+        }
+    }*/
+
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -121,3 +173,4 @@ public class TelaBase extends JFrame implements ActionListener {
         throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
 }
+
