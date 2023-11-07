@@ -145,13 +145,6 @@ public class TelaBase extends JFrame implements ActionListener {
         if (permissoes.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nenhuma permissão encontrada.");
         } else {
-
-            //JOptionPane.showMessageDialog(this, "Permissões encontradas: " + String.join(", ", permissoes));
-            //gerarTextoTeste(permissoes);
-            /////////////////////////////////////////////////////////////////////////////////////////////////////
-            /////////////////////////////////////////A PARTIR DAQUI//////////////////////////////////////////////
-            /////////////////////////////////////////////////////////////////////////////////////////////////////
-            //SwingUtilities.invokeLater(() -> new telaDeTeste());
             new TelaBase().gerarTextoTeste(permissoes);
 
         }
@@ -166,11 +159,12 @@ public class TelaBase extends JFrame implements ActionListener {
         Coisaresul.setLayout(null);
 
         String[] coluna = {"Pré-condição", "Teste", "Resultado Esperado"};
-        DefaultTableModel model = new DefaultTableModel(10, coluna.length); // Create a model with 1 row
+        DefaultTableModel model = new DefaultTableModel(36, coluna.length);
 
         for (int i = 0; i < coluna.length; i++) {
-            model.setValueAt(coluna[i], 0, i); // Populate the first row of the model with coluna
+            model.setColumnIdentifiers(coluna);
         }
+        //model.setValueAt(coluna[i], 0, i); 
 
         JTable tabela = new JTable(model);
         Janelaresul.add(new JScrollPane(tabela));
@@ -178,6 +172,7 @@ public class TelaBase extends JFrame implements ActionListener {
         Janelaresul.setLocationRelativeTo(null);
         Janelaresul.setVisible(true);
     }
+
 
 
     public static void main(String[] args) {
