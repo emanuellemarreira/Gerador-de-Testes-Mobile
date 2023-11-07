@@ -10,6 +10,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 
 
 
@@ -162,52 +164,21 @@ public class TelaBase extends JFrame implements ActionListener {
         Janelaresul.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         JPanel Coisaresul = new JPanel();
         Coisaresul.setLayout(null);
-        String[] vetorDePermissoes = permissoes.toArray(new String[0]);
-        String [] colunas = {"Pré-condição", "Teste", "Resultado Esperado"};
-        JTable tabela = new JTable(10,3);
-        JScrollPane barraRolagem = new JScrollPane(tabela);
-        //JScrollBar barrascroll = new JScrollBar();
-        //tabela.
-        Janelaresul.add(tabela);
-        //Janelaresul.add(barrascroll);
 
+        String[] coluna = {"Pré-condição", "Teste", "Resultado Esperado"};
+        DefaultTableModel model = new DefaultTableModel(10, coluna.length); // Create a model with 1 row
 
-        JLabel label;
+        for (int i = 0; i < coluna.length; i++) {
+            model.setValueAt(coluna[i], 0, i); // Populate the first row of the model with coluna
+        }
+
+        JTable tabela = new JTable(model);
+        Janelaresul.add(new JScrollPane(tabela));
 
         Janelaresul.setLocationRelativeTo(null);
         Janelaresul.setVisible(true);
-
-        /*for (String permissao : permissoes) {
-            if (permissao.equals("INTERNET")) {
-                String texto = "<html><body><div style='text-align: center; font-family: Arial; font-size: 15px; color: black;'>Cavalo</div></body></html>";
-                label = new JLabel(texto);
-                label.setBounds(100, 109, 300, 200);
-                Coisaresul.add(label);
-                label.setVisible(true);
-            }/* else {
-                String texto = "<html><body><div style='text-align: center; font-family: Arial; font-size: 15px; color: black;'>Mulheres peladas</div></body></html>";
-                label = new JLabel(texto);
-                label.setBounds(100, 109, 300, 200);
-                Coisaresul.add(label);
-                label.setVisible(true);
-            }
-        }
-        /*Janelaresul.add(Coisaresul);
-        Janelaresul.setLocationRelativeTo(null);
-        Janelaresul.setVisible(true);*/
-
-
-        /*String [] colunas = {"Pré-condição", "Teste", "Resultado Esperado"};
-        Object [][] dados = {
-                {"Ana Monteiro", "48 9923-7898", "ana.monteiro@gmail.com"},
-                {"João da Silva", "48 8890-3345", "joaosilva@hotmail.com"},
-                {"Pedro Cascaes", "48 9870-5634", "pedrinho@gmail.com"}
-        };
-
-        JTable tabela = new JTable(dados, colunas);
-        JScrollPane barraRolagem = new JScrollPane(tabela);
-        Janelaresul.add(barraRolagem);*/
     }
+
 
     public static void main(String[] args) {
         try {
