@@ -1,5 +1,6 @@
 package teste;
 
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class TelaBase extends JFrame implements ActionListener {
 
@@ -29,6 +32,7 @@ public class TelaBase extends JFrame implements ActionListener {
 
         setVisible(true);
     }
+
 
     private JPanel criarTelaBasePanel() {
         JPanel TelaTestar = new JPanel();
@@ -137,27 +141,73 @@ public class TelaBase extends JFrame implements ActionListener {
         }
 
         if (permissoes.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nenhuma permissão encontrada no arquivo AndroidManifest.xml.");
+            JOptionPane.showMessageDialog(this, "Nenhuma permissão encontrada.");
         } else {
-            JOptionPane.showMessageDialog(this, "Permissões encontradas: " + String.join(", ", permissoes));
+
+            //JOptionPane.showMessageDialog(this, "Permissões encontradas: " + String.join(", ", permissoes));
             //gerarTextoTeste(permissoes);
             /////////////////////////////////////////////////////////////////////////////////////////////////////
             /////////////////////////////////////////A PARTIR DAQUI//////////////////////////////////////////////
             /////////////////////////////////////////////////////////////////////////////////////////////////////
             //SwingUtilities.invokeLater(() -> new telaDeTeste());
+            new TelaBase().gerarTextoTeste(permissoes);
+
         }
     }
 
-    /*private void gerarTextoTeste(List<String> permissoes) {
-        for (String permissao : permissoes) {
+    private void gerarTextoTeste(List<String> permissoes) {
+        JFrame Janelaresul = new JFrame("RESULTADO TESTE");
+        Janelaresul.setSize(600, 600);
+        Janelaresul.setResizable(true);
+        Janelaresul.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        JPanel Coisaresul = new JPanel();
+        Coisaresul.setLayout(null);
+        String[] vetorDePermissoes = permissoes.toArray(new String[0]);
+        String [] colunas = {"Pré-condição", "Teste", "Resultado Esperado"};
+        JTable tabela = new JTable(10,3);
+        JScrollPane barraRolagem = new JScrollPane(tabela);
+        //JScrollBar barrascroll = new JScrollBar();
+        //tabela.
+        Janelaresul.add(tabela);
+        //Janelaresul.add(barrascroll);
+
+
+        JLabel label;
+
+        Janelaresul.setLocationRelativeTo(null);
+        Janelaresul.setVisible(true);
+
+        /*for (String permissao : permissoes) {
             if (permissao.equals("INTERNET")) {
-                JOptionPane.showMessageDialog(this, "Permissões encontradas: " + String.join(", ", permissoes) +
-                        "\nPré-requisito: Wifi desligado\n" +
-                        "Teste: Acessar app com 4G\n" +
-                        "Resultados esperados: Páginas, transições e informações serem carregadas normalmente");
+                String texto = "<html><body><div style='text-align: center; font-family: Arial; font-size: 15px; color: black;'>Cavalo</div></body></html>";
+                label = new JLabel(texto);
+                label.setBounds(100, 109, 300, 200);
+                Coisaresul.add(label);
+                label.setVisible(true);
+            }/* else {
+                String texto = "<html><body><div style='text-align: center; font-family: Arial; font-size: 15px; color: black;'>Mulheres peladas</div></body></html>";
+                label = new JLabel(texto);
+                label.setBounds(100, 109, 300, 200);
+                Coisaresul.add(label);
+                label.setVisible(true);
             }
         }
-    }*/
+        /*Janelaresul.add(Coisaresul);
+        Janelaresul.setLocationRelativeTo(null);
+        Janelaresul.setVisible(true);*/
+
+
+        /*String [] colunas = {"Pré-condição", "Teste", "Resultado Esperado"};
+        Object [][] dados = {
+                {"Ana Monteiro", "48 9923-7898", "ana.monteiro@gmail.com"},
+                {"João da Silva", "48 8890-3345", "joaosilva@hotmail.com"},
+                {"Pedro Cascaes", "48 9870-5634", "pedrinho@gmail.com"}
+        };
+
+        JTable tabela = new JTable(dados, colunas);
+        JScrollPane barraRolagem = new JScrollPane(tabela);
+        Janelaresul.add(barraRolagem);*/
+    }
 
     public static void main(String[] args) {
         try {
