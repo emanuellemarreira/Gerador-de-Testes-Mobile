@@ -1,5 +1,6 @@
 package teste;
 
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
@@ -137,26 +138,39 @@ public class TelaBase extends JFrame implements ActionListener {
         }
 
         if (permissoes.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nenhuma permissão encontrada no arquivo AndroidManifest.xml.");
+            new TelaBase().gerarTextoTeste(permissoes);
         } else {
-            JOptionPane.showMessageDialog(this, "Permissões encontradas: " + String.join(", ", permissoes));
-            /////////////////////////////////////////////////////////////////////////////////////////////////////
-            /////////////////////////////////////////A PARTIR DAQUI//////////////////////////////////////////////
-            /////////////////////////////////////////////////////////////////////////////////////////////////////
-            //SwingUtilities.invokeLater(() -> new telaDeTeste());
+            new TelaBase().gerarTextoTeste(permissoes);
         }
     }
 
-    /*private void gerarTextoTeste(List<String> permissoes) {
+    private void gerarTextoTeste(List<String> permissoes) {
+        JFrame Janelaresul = new JFrame("RESULTADO TESTE");
+        Janelaresul.setSize(600, 600);
+        Janelaresul.setResizable(false);
+        Janelaresul.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        JPanel Coisaresul = new JPanel();
+        Coisaresul.setLayout(null);
+        JLabel label;
         for (String permissao : permissoes) {
             if (permissao.equals("INTERNET")) {
-                JOptionPane.showMessageDialog(this, "Permissões encontradas: " + String.join(", ", permissoes) +
-                        "\nPré-requisito: Wifi desligado\n" +
-                        "Teste: Acessar app com 4G\n" +
-                        "Resultados esperados: Páginas, transições e informações serem carregadas normalmente");
+                String texto = "<html><body><div style='text-align: center; font-family: Arial; font-size: 15px; color: black;'>Cavalo</div></body></html>";
+                label = new JLabel(texto);
+                label.setBounds(100, 109, 300, 200);
+                Coisaresul.add(label);
+                label.setVisible(true);
+            } else {
+                String texto = "<html><body><div style='text-align: center; font-family: Arial; font-size: 15px; color: black;'>Mulheres peladas</div></body></html>";
+                label = new JLabel(texto);
+                label.setBounds(100, 109, 300, 200);
+                Coisaresul.add(label);
+                label.setVisible(true);
             }
         }
-    }*/
+        Janelaresul.add(Coisaresul);
+        Janelaresul.setLocationRelativeTo(null);
+        Janelaresul.setVisible(true);
+    }
 
     public static void main(String[] args) {
         try {
