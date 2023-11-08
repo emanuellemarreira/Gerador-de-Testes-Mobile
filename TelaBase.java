@@ -149,31 +149,84 @@ public class TelaBase extends JFrame implements ActionListener {
 
         }
     }
-
     private void gerarTextoTeste(List<String> permissoes) {
         JFrame Janelaresul = new JFrame("RESULTADO TESTE");
-        Janelaresul.setSize(600, 600);
-        Janelaresul.setResizable(true);
+        Janelaresul.setSize(1400, 600);
+        Janelaresul.setResizable(false);
         Janelaresul.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        JPanel Coisaresul = new JPanel();
-        Coisaresul.setLayout(null);
 
-        String[] coluna = {"Pré-condição", "Teste", "Resultado Esperado"};
-        DefaultTableModel model = new DefaultTableModel(36, coluna.length);
-
+        String[] coluna = {"Pré-requisito", "Teste", "Resultado Esperado"};
+        DefaultTableModel model = new DefaultTableModel(0, coluna.length);
         for (int i = 0; i < coluna.length; i++) {
             model.setColumnIdentifiers(coluna);
         }
-        //model.setValueAt(coluna[i], 0, i); 
+
+        String[] teste_internet = {
+                "Wifi desligado"," Acessar app com 4G"," Páginas, transições e informações serem carregadas normalmente",
+                "Wifi desligado","Realizar operações no app com 4G", "Operações funcionarem normalmente",
+                "Wifi ligado", "Acessar um contexto e desligar o wifi enquanto navega", "Checar modais de erro de carregamento nas tela\n(''Falha ap carregar dados/página'')",
+                "Wifi ou G ligada","Alternar entre wifi e 4G enquanto navega pelo app","Páginas, transições e informações serem carregadas normalmente",
+                "Modo avião habilitado","Acessar app sem internet","Checar modais de erro de carregamentos nas telas (''Falha ao carregar dados/página'')",
+                "Modo avião habiltado", "Realizar operações no app sem internet", "Checar modais/telas de erro",
+                "Wifi/rede móvel ligado", "Acessar um contexto e desligar a rede móvel enquanto navega","Checar modais de erro de carregamentos nas telas (''Falha ao carregar dados/página'')",
+                "Wifi/Rede móvel desligado","Habilitar intemet e acessar app", "Ao clicar no botão de tentar novamente, os dados serem carregados normalmente",
+                "Wifi/Rede móvel desligado", "Habilitar internet e realizar operações no app", "Operações funcionarem normalmente"
+        };
+
+        String[] teste_resolucao = {
+                "Apareho com resolução 320px","Acessar app com resolução de 320px"," Checar se as páginas, botões, textos, imagens estão bem dimensionadas",
+                "Apareho com resolução 720px","Acessar app com resolução de 720px"," Checar se as páginas, botões, textos, imagens estão bem dimensionadas",
+                "Apareho com resolução 1080px","Acessar app com resolução de 1080px"," Checar se as páginas, botões, textos, imagens estão bem dimensionadas",
+                "Apareho com resolução 1440px","Acessar app com resolução de 1440px"," Checar se as páginas, botões, textos, imagens estão bem dimensionadas"
+        };
+        String[] teste_rotacionarTela = {
+                "Estar com o app em modo paisagem","Girar tela Horizontalmente","No momento, app é para ficar na vertical",
+                "Estar com o app em modo retrato","Girar tela Horizontalmente","App é para ficar na vertical"
+                };
+        String[] teste_Notificacoes = {"Acessar um modulo","Receber notificação de outro App, clicar e depois voltar para o app","paginas, transições e informações carregadas normalmente",};
+
+        if (permissoes.contains("INTERNET")) {
+            model.addRow(new Object[]{"Internet", "", ""});
+            for (int k = 0; k < teste_internet.length; k += 3) {
+                if (k + 2 < teste_internet.length) {
+                    model.addRow(new Object[]{teste_internet[k], teste_internet[k + 1], teste_internet[k + 2]});
+                }
+            }
+        }
+
+        model.addRow(new Object[]{"", "", ""});
+        model.addRow(new Object[]{"Resolução de dispositivo", "", ""});
+        for (int k = 0; k < teste_resolucao.length; k += 3) {
+            if (k + 2 < teste_resolucao.length) {
+                model.addRow(new Object[]{teste_resolucao[k], teste_resolucao[k + 1], teste_resolucao[k + 2]});
+            }
+        }
+
+        model.addRow(new Object[]{"", "", ""});
+        model.addRow(new Object[]{"Rotacionar Tela", "", ""});
+        for (int k = 0; k < teste_rotacionarTela.length; k += 3) {
+            if (k + 2 < teste_rotacionarTela.length) {
+                model.addRow(new Object[]{teste_rotacionarTela[k], teste_rotacionarTela[k + 1], teste_rotacionarTela[k + 2]});
+            }
+        }
+
+        model.addRow(new Object[]{"", "", ""});
+        model.addRow(new Object[]{"Notificações gerais", "", ""});
+        for (int k = 0; k < teste_Notificacoes.length; k += 3) {
+            if (k + 2 < teste_Notificacoes.length) {
+                model.addRow(new Object[]{teste_Notificacoes[k], teste_Notificacoes[k + 1], teste_Notificacoes[k + 2]});
+            }
+        }
 
         JTable tabela = new JTable(model);
         Janelaresul.add(new JScrollPane(tabela));
 
+        JScrollPane scrollPane = new JScrollPane(tabela);
+        Janelaresul.add(scrollPane);
+
         Janelaresul.setLocationRelativeTo(null);
         Janelaresul.setVisible(true);
     }
-
-
 
     public static void main(String[] args) {
         try {
