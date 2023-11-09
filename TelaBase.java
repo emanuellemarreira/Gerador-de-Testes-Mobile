@@ -183,9 +183,52 @@ public class TelaBase extends JFrame implements ActionListener {
                 "Estar com o app em modo paisagem","Girar tela Horizontalmente","No momento, app é para ficar na vertical",
                 "Estar com o app em modo retrato","Girar tela Horizontalmente","App é para ficar na vertical"
                 };
-        String[] teste_Notificacoes = {"Acessar um modulo","Receber notificação de outro App, clicar e depois voltar para o app","paginas, transições e informações carregadas normalmente",};
+        String[] teste_Notificacoes = {
+                "Acessar um modulo","Receber notificação de outro App, clicar e depois voltar para o app","paginas, transições e informações carregadas normalmente"
+        };
 
-        if (permissoes.contains("INTERNET")) {
+        String[] teste_Bloquear_tela = {
+                "Acessar um módulo", "Apertar a tecla para bloquear a tela e entrar novamente", "Páginas, transições e informações serem carregadas normalmente"
+
+        };
+
+        String[] teste_Acessibilidade = {
+                "Geral - Recursos de acessibilidade ligada (ex: controles de interagao, correção de cor, texto em alto contraste, legendas ampliacao etc)", "Navegar pelo app", "Recursos de acessibilidade funcionarem corretamente junto com funcionalidades do app",
+                "Inversão de cores ligado", "Navegar pelo app", "Todos os textos e cores podem ser distinguidas",
+                "Correção de cores ligado", "Navegar pelo app", "Nenhum texto ou imagem é apagado",
+                "Text to speach", "Navegar pelo app", "A sequência de objetos lidos na tela segue uma sequência lógica e é possível navegar pelo app"
+        };
+
+        String[] teste_Back_do_Dispositivo = {
+                "Acessar um módulo no Android", "Navegar nas páginas e ir voltando com o back do Android", "Checar se está voltando para a tela correta",
+                "Acessar um módulo no IOS", "Navegar nas páginas e ir voltando com o arrastar do IOS", "Checar se está voltando para a tela correta"
+
+        };
+
+        String[] teste_Atender_ligação = {
+                "Acessar um módulo" ,"Receber uma ligação, deixar tocar e depois voltar para o app", "Quando voltamos para o app depois da ligação, continuamos na mesma tela e no mesmo estado que originalmente deixamos a app (seja logado ou não e independentemente da tela/ação que estávamos fazendo), - Verificar que a ligação está sobrepondo a aplicação (não está apenas no modal superior)",
+                "Acessar um módulo", "Receber uma ligação, atender e depois voltar para o app", "Quando voltamos para o app depois da ligação, continuamos na mesma tela e no mesmo estado que originalmente deixamos a app (seja logado ou não e independentemente da tela/ação que estávamos fazendo), Quando a ligação é atendida e colocada no ouvido, a aplicação não está sendo mantida na tela e não estamos mexendo nela sem saber",
+                "Acessar um módulo", "Receber uma ligação, recusar chamada e depois voltar para o app", "Quando voltamos para o app depois da ligação, continuamos na mesma tela e no mesmo estado que originalmente deixamos a app (seja logado ou não e independentemente da tela/ação que estávamos fazendo)"
+
+        };
+
+        String[] teste_Fontes = {
+                "Tamanho da fonte do celular estar configurado como muito grande (última opção de tamanho)", "Acessar app com fontes muito grandes", "Checar se as páginas, botões, textos, imagens estão bem dimensionadas",
+                "Tamanho da fonte do celular estar configurado como padrão", "Acessar app com fontes padrão (tamanho normal que já vem geralmente por default nos aparelhos)", "Checar se as páginas, botões, textos, imagens estão bem dimensionadas",
+                "Tamanho da fonte do celular estar configurado como pequena", "Acessar app com fontes pequena", "Checar se as páginas, botões, textos, imagens estão bemdimensionadas"
+        };
+
+        adicionarDadosAoModel(model, "Internet", teste_internet);
+        adicionarDadosAoModel(model, "Resolução de dispositivo", teste_resolucao);
+        adicionarDadosAoModel(model, "Rotacionar Tela", teste_rotacionarTela);
+        adicionarDadosAoModel(model, "Notificações gerais", teste_Notificacoes);
+        adicionarDadosAoModel(model, "Bloquear tela", teste_Bloquear_tela);
+        adicionarDadosAoModel(model, "Acessibilidade", teste_Acessibilidade);
+        adicionarDadosAoModel(model, "Back do Dispositivo", teste_Atender_ligação);
+        adicionarDadosAoModel(model, "Atender ligação", teste_Notificacoes);
+        adicionarDadosAoModel(model, "Fontes", teste_Fontes);
+
+        /*if (permissoes.contains("INTERNET")) {
             model.addRow(new Object[]{"Internet", "", ""});
             for (int k = 0; k < teste_internet.length; k += 3) {
                 if (k + 2 < teste_internet.length) {
@@ -200,23 +243,7 @@ public class TelaBase extends JFrame implements ActionListener {
             if (k + 2 < teste_resolucao.length) {
                 model.addRow(new Object[]{teste_resolucao[k], teste_resolucao[k + 1], teste_resolucao[k + 2]});
             }
-        }
-
-        model.addRow(new Object[]{"", "", ""});
-        model.addRow(new Object[]{"Rotacionar Tela", "", ""});
-        for (int k = 0; k < teste_rotacionarTela.length; k += 3) {
-            if (k + 2 < teste_rotacionarTela.length) {
-                model.addRow(new Object[]{teste_rotacionarTela[k], teste_rotacionarTela[k + 1], teste_rotacionarTela[k + 2]});
-            }
-        }
-
-        model.addRow(new Object[]{"", "", ""});
-        model.addRow(new Object[]{"Notificações gerais", "", ""});
-        for (int k = 0; k < teste_Notificacoes.length; k += 3) {
-            if (k + 2 < teste_Notificacoes.length) {
-                model.addRow(new Object[]{teste_Notificacoes[k], teste_Notificacoes[k + 1], teste_Notificacoes[k + 2]});
-            }
-        }
+        }*/
 
         JTable tabela = new JTable(model);
         Janelaresul.add(new JScrollPane(tabela));
@@ -226,6 +253,14 @@ public class TelaBase extends JFrame implements ActionListener {
 
         Janelaresul.setLocationRelativeTo(null);
         Janelaresul.setVisible(true);
+    }
+    private void adicionarDadosAoModel(DefaultTableModel model, String titulo, String[] dados) {
+        model.addRow(new Object[]{titulo, "", ""});
+        for (int k = 0; k < dados.length; k += 3) {
+            if (k + 2 < dados.length) {
+                model.addRow(new Object[]{dados[k], dados[k + 1], dados[k + 2]});
+            }
+        }
     }
 
     public static void main(String[] args) {
