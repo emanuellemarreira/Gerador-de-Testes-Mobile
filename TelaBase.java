@@ -177,6 +177,7 @@ public class TelaBase extends JFrame implements ActionListener {
         if (permissoes.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nenhuma permissão encontrada.");
         } else {
+            dispose();
             new TelaBase().gerarTextoTeste(permissoes);
 
         }
@@ -191,10 +192,16 @@ public class TelaBase extends JFrame implements ActionListener {
         Janelaresul.setIconImage(imagemiconr.getImage());
 
         String[] coluna = {"Pré-requisito", "Teste", "Resultado Esperado"};
-        DefaultTableModel model = new DefaultTableModel(0, coluna.length);
+        DefaultTableModel model = new DefaultTableModel(0, coluna.length) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Torna as células não editáveis
+            }
+        };
         for (int i = 0; i < coluna.length; i++) {
             model.setColumnIdentifiers(coluna);
         }
+
 
         String[] teste_internet = {
                 "Wifi desligado"," Acessar app com 4G"," Páginas, transições e informações serem carregadas normalmente",
@@ -236,7 +243,7 @@ public class TelaBase extends JFrame implements ActionListener {
 
         String[] teste_Back_do_Dispositivo = {
                 "Acessar um módulo no Android", "Navegar nas páginas e ir voltando com o back do Android", "Checar se está voltando para a tela correta",
-                "Acessar um módulo no IOS", "Navegar nas páginas e ir voltando com o arrastar do IOS", "Checar se está voltando para a tela correta"
+
 
         };
 
@@ -253,15 +260,15 @@ public class TelaBase extends JFrame implements ActionListener {
                 "Tamanho da fonte do celular estar configurado como pequena", "Acessar app com fontes pequena", "Checar se as páginas, botões, textos, imagens estão bemdimensionadas"
         };
 
-        adicionarDadosAoModel(model, "Internet", teste_internet);
-        adicionarDadosAoModel(model, "Resolução de dispositivo", teste_resolucao);
-        adicionarDadosAoModel(model, "Rotacionar Tela", teste_rotacionarTela);
-        adicionarDadosAoModel(model, "Notificações gerais", teste_Notificacoes);
-        adicionarDadosAoModel(model, "Bloquear tela", teste_Bloquear_tela);
-        adicionarDadosAoModel(model, "Acessibilidade", teste_Acessibilidade);
-        adicionarDadosAoModel(model, "Back do Dispositivo", teste_Atender_ligação);
-        adicionarDadosAoModel(model, "Atender ligação", teste_Notificacoes);
-        adicionarDadosAoModel(model, "Fontes", teste_Fontes);
+        adicionarDadosAoModel(model, "Internet", teste_internet, permissoes,"INTERNET");
+        adicionarDadosAoModel(model, "Resolução de dispositivo", teste_resolucao, permissoes,"");
+        adicionarDadosAoModel(model, "Rotacionar Tela", teste_rotacionarTela, permissoes,"");
+        adicionarDadosAoModel(model, "Notificações gerais", teste_Notificacoes, permissoes,"");
+        adicionarDadosAoModel(model, "Bloquear tela", teste_Bloquear_tela, permissoes,"WAKE_LOCK");
+        adicionarDadosAoModel(model, "Acessibilidade", teste_Acessibilidade, permissoes,"");
+        adicionarDadosAoModel(model, "Back do Dispositivo", teste_Atender_ligação, permissoes,"");
+        adicionarDadosAoModel(model, "Atender ligação", teste_Notificacoes, permissoes,"");
+        adicionarDadosAoModel(model, "Fontes", teste_Fontes, permissoes,"");
 
         /*if (permissoes.contains("INTERNET")) {
             model.addRow(new Object[]{"Internet", "", ""});
@@ -289,11 +296,14 @@ public class TelaBase extends JFrame implements ActionListener {
         Janelaresul.setLocationRelativeTo(null);
         Janelaresul.setVisible(true);
     }
-    private void adicionarDadosAoModel(DefaultTableModel model, String titulo, String[] dados) {
-        model.addRow(new Object[]{titulo, "", ""});
-        for (int k = 0; k < dados.length; k += 3) {
-            if (k + 2 < dados.length) {
-                model.addRow(new Object[]{dados[k], dados[k + 1], dados[k + 2]});
+
+    private void adicionarDadosAoModel(DefaultTableModel model, String titulo, String[] dados, List<String> permissoes, String permissao) {
+        if (permissoes.contains(permissao)) {
+            model.addRow(new Object[]{titulo, "", ""});
+            for (int k = 0; k < dados.length; k += 3) {
+                if (k + 2 < dados.length) {
+                    model.addRow(new Object[]{dados[k], dados[k + 1], dados[k + 2]});
+                }
             }
         }
     }
