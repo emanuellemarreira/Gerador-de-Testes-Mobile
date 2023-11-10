@@ -28,6 +28,10 @@ public class TelaBase extends JFrame implements ActionListener {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        String caminhoicon = "imagens/Icones.png";
+        ImageIcon imagemicon = new ImageIcon(caminhoicon);
+        setIconImage(imagemicon.getImage());
+
         JPanel telaBasePanel = criarTelaBasePanel();
         add(telaBasePanel);
 
@@ -109,6 +113,9 @@ public class TelaBase extends JFrame implements ActionListener {
         Janelaso.setResizable(false);
         Janelaso.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         Janelaso.setLayout(null);
+        String caminhoiconc = "imagens/Icones.png";
+        ImageIcon imagemiconc = new ImageIcon(caminhoiconc);
+        Janelaso.setIconImage(imagemiconc.getImage());
         JPanel Janelasobre = new JPanel();
         Janelasobre.setBounds(-30, 10, 400, 400);
         String texto = "<html><body><div style='text-align: center; font-family: Arial; font-size: 10px; color: black;'>Projeto feito por:<br><br>Andrey Gabriel dos Anjos Mendes<br><br>Beatriz Guedes da Silva<br><br>Emanuelle Rocha Marreira<br><br>Italo Ferreira Fonseca<br><br>João Vitor Silva de Carvalho<br><br>Alunos de Engenharia de Computação da UEA<br><br>(Universidade Estadual do Amazonas)<br><br>Professor Orientador:<br><br>Jonathas Silva</div></body></html>";
@@ -179,6 +186,9 @@ public class TelaBase extends JFrame implements ActionListener {
         Janelaresul.setSize(1400, 600);
         Janelaresul.setResizable(false);
         Janelaresul.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        String caminhoiconr = "imagens/Icones.png";
+        ImageIcon imagemiconr = new ImageIcon(caminhoiconr);
+        Janelaresul.setIconImage(imagemiconr.getImage());
 
         String[] coluna = {"Pré-requisito", "Teste", "Resultado Esperado"};
         DefaultTableModel model = new DefaultTableModel(0, coluna.length);
