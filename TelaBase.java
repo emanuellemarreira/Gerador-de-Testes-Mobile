@@ -1,6 +1,5 @@
 package teste;
 
-import java.awt.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
@@ -24,7 +23,7 @@ public class TelaBase extends JFrame implements ActionListener {
 
     public TelaBase() {
         setTitle("Gerador de testes para aplicativos mobile");
-        setBounds(300, 300, 650, 150);
+        setBounds(300, 300, 650, 175);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,6 +53,14 @@ public class TelaBase extends JFrame implements ActionListener {
         });
         TelaTestar.add(TesteButton);
 
+        JButton SobreButton = new JButton("Sobre...");
+        SobreButton.setBounds(545, 100, 75, 25);
+        SobreButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JanelaCreditos();
+            }
+        });
 
         String texto = "Selecione o arquivo AndroidManifest.xml do seu aplicativo:";
         JLabel label = new JLabel(texto);
@@ -89,10 +96,28 @@ public class TelaBase extends JFrame implements ActionListener {
             }
         });
         TelaTestar.add(BuscarButton);
+        TelaTestar.add(SobreButton);
 
         TelaTestar.add(textField);
 
         return TelaTestar;
+    }
+
+    private void JanelaCreditos() {
+        JFrame Janelaso = new JFrame("SOBRE O PROJETO");
+        Janelaso.setSize(350, 400);
+        Janelaso.setResizable(false);
+        Janelaso.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        Janelaso.setLayout(null);
+        JPanel Janelasobre = new JPanel();
+        Janelasobre.setBounds(-30, 10, 400, 400);
+        String texto = "<html><body><div style='text-align: center; font-family: Arial; font-size: 10px; color: black;'>Projeto feito por:<br><br>Andrey Gabriel dos Anjos Mendes<br><br>Beatriz Guedes da Silva<br><br>Emanuelle Rocha Marreira<br><br>Italo Ferreira Fonseca<br><br>João Vitor Silva de Carvalho<br><br>Alunos de Engenharia de Computação da UEA<br><br>(Universidade Estadual do Amazonas)<br><br>Professor Orientador:<br><br>Jonathas Silva</div></body></html>";
+        JLabel label = new JLabel(texto);
+        label.setBounds(50, 50, 390, 390);
+        Janelaso.add(Janelasobre);
+        Janelasobre.add(label);
+        Janelaso.setLocationRelativeTo(null);
+        Janelaso.setVisible(true);
     }
     //buscando o arquivo manifest
    /* private void buscarAndroidManifest() {
