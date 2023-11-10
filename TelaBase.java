@@ -183,6 +183,8 @@ public class TelaBase extends JFrame implements ActionListener {
         }
     }
     private void gerarTextoTeste(List<String> permissoes) {
+        setVisible(false);
+        dispose();
         JFrame Janelaresul = new JFrame("RESULTADO TESTE");
         Janelaresul.setSize(1400, 600);
         Janelaresul.setResizable(false);
