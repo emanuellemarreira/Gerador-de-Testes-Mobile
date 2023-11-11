@@ -217,77 +217,49 @@ public class TelaBase extends JFrame implements ActionListener {
                 "Wifi/Rede móvel desligado", "Habilitar internet e realizar operações no app", "Operações funcionarem normalmente"
         };
 
-        String[] teste_resolucao = {
-                "Apareho com resolução 320px","Acessar app com resolução de 320px"," Checar se as páginas, botões, textos, imagens estão bem dimensionadas",
-                "Apareho com resolução 720px","Acessar app com resolução de 720px"," Checar se as páginas, botões, textos, imagens estão bem dimensionadas",
-                "Apareho com resolução 1080px","Acessar app com resolução de 1080px"," Checar se as páginas, botões, textos, imagens estão bem dimensionadas",
-                "Apareho com resolução 1440px","Acessar app com resolução de 1440px"," Checar se as páginas, botões, textos, imagens estão bem dimensionadas"
-        };
-        String[] teste_rotacionarTela = {
-                "Estar com o app em modo paisagem","Girar tela Horizontalmente","No momento, app é para ficar na vertical",
-                "Estar com o app em modo retrato","Girar tela Horizontalmente","App é para ficar na vertical"
-                };
-        String[] teste_Notificacoes = {
-                "Acessar um modulo","Receber notificação de outro App, clicar e depois voltar para o app","paginas, transições e informações carregadas normalmente"
+        String[] teste_camera = {
+                "Nenhuma permissão de câmera concedida","Acesse um recurso que utiliza a câmera (por exemplo, tirar uma foto ou escanear um código QR)","A câmera deve ser ativada corretamente, e as imagens são processadas conforme esperado"
         };
 
         String[] teste_Bloquear_tela = {
                 "Acessar um módulo", "Apertar a tecla para bloquear a tela e entrar novamente", "Páginas, transições e informações serem carregadas normalmente"
-
         };
 
-        String[] teste_Acessibilidade = {
-                "Geral - Recursos de acessibilidade ligada (ex: controles de interagao, correção de cor, texto em alto contraste, legendas ampliacao etc)", "Navegar pelo app", "Recursos de acessibilidade funcionarem corretamente junto com funcionalidades do app",
-                "Inversão de cores ligado", "Navegar pelo app", "Todos os textos e cores podem ser distinguidas",
-                "Correção de cores ligado", "Navegar pelo app", "Nenhum texto ou imagem é apagado",
-                "Text to speach", "Navegar pelo app", "A sequência de objetos lidos na tela segue uma sequência lógica e é possível navegar pelo app"
+        String[] teste_armazenamento = {
+                "Nenhuma permissão de armazenamento externo concedida"," Realize operações que envolvam leitura e gravação de arquivos no armazenamento externo do dispositivo","O aplicativo deve lidar corretamente com permissões de armazenamento, permitindo a leitura e gravação de arquivos externos"
         };
 
-        String[] teste_Back_do_Dispositivo = {
-                "Acessar um módulo no Android", "Navegar nas páginas e ir voltando com o back do Android", "Checar se está voltando para a tela correta",
 
-
-        };
-
-        String[] teste_Atender_ligação = {
+        String[] teste_Atender_ligacao = {
                 "Acessar um módulo" ,"Receber uma ligação, deixar tocar e depois voltar para o app", "Quando voltamos para o app depois da ligação, continuamos na mesma tela e no mesmo estado que originalmente deixamos a app (seja logado ou não e independentemente da tela/ação que estávamos fazendo), - Verificar que a ligação está sobrepondo a aplicação (não está apenas no modal superior)",
                 "Acessar um módulo", "Receber uma ligação, atender e depois voltar para o app", "Quando voltamos para o app depois da ligação, continuamos na mesma tela e no mesmo estado que originalmente deixamos a app (seja logado ou não e independentemente da tela/ação que estávamos fazendo), Quando a ligação é atendida e colocada no ouvido, a aplicação não está sendo mantida na tela e não estamos mexendo nela sem saber",
                 "Acessar um módulo", "Receber uma ligação, recusar chamada e depois voltar para o app", "Quando voltamos para o app depois da ligação, continuamos na mesma tela e no mesmo estado que originalmente deixamos a app (seja logado ou não e independentemente da tela/ação que estávamos fazendo)"
 
         };
 
-        String[] teste_Fontes = {
-                "Tamanho da fonte do celular estar configurado como muito grande (última opção de tamanho)", "Acessar app com fontes muito grandes", "Checar se as páginas, botões, textos, imagens estão bem dimensionadas",
-                "Tamanho da fonte do celular estar configurado como padrão", "Acessar app com fontes padrão (tamanho normal que já vem geralmente por default nos aparelhos)", "Checar se as páginas, botões, textos, imagens estão bem dimensionadas",
-                "Tamanho da fonte do celular estar configurado como pequena", "Acessar app com fontes pequena", "Checar se as páginas, botões, textos, imagens estão bemdimensionadas"
-        };
+        String[] teste_localizacao = {
+                "Nenhuma permissão de localização concedida","Acesse um módulo que utiliza a localização","A aplicação deve solicitar permissões de localização e obter a localização correta do dispositivo"
+                };
 
-        adicionarDadosAoModel(model, "Internet", teste_internet, permissoes,"INTERNET");
-        adicionarDadosAoModel(model, "Resolução de dispositivo", teste_resolucao, permissoes,"");
-        adicionarDadosAoModel(model, "Rotacionar Tela", teste_rotacionarTela, permissoes,"");
-        adicionarDadosAoModel(model, "Notificações gerais", teste_Notificacoes, permissoes,"");
-        adicionarDadosAoModel(model, "Bloquear tela", teste_Bloquear_tela, permissoes,"WAKE_LOCK");
-        adicionarDadosAoModel(model, "Acessibilidade", teste_Acessibilidade, permissoes,"");
-        adicionarDadosAoModel(model, "Back do Dispositivo", teste_Atender_ligação, permissoes,"");
-        adicionarDadosAoModel(model, "Atender ligação", teste_Notificacoes, permissoes,"");
-        adicionarDadosAoModel(model, "Fontes", teste_Fontes, permissoes,"");
-
-        /*if (permissoes.contains("INTERNET")) {
-            model.addRow(new Object[]{"Internet", "", ""});
-            for (int k = 0; k < teste_internet.length; k += 3) {
-                if (k + 2 < teste_internet.length) {
-                    model.addRow(new Object[]{teste_internet[k], teste_internet[k + 1], teste_internet[k + 2]});
-                }
-            }
+        if (permissoes.contains("INTERNET") || permissoes.contains("ACCESS_NETWORK_STATE") || permissoes.contains("CHANGE_NETWORK_STATE")) {
+            adicionarDadosAoModel(model, "Internet", teste_internet);
+        }
+        if (permissoes.contains("ACCESS_FINE_LOCATION")||permissoes.contains("ACCESS_COARSE_LOCATION")) {
+            adicionarDadosAoModel(model, "Localização", teste_localizacao);
+        }
+        if (permissoes.contains("CAMERA")) {
+            adicionarDadosAoModel(model, "Camera", teste_camera);
+        }
+        if (permissoes.contains("READ_EXTERNAL_STORAGE")||permissoes.contains("WRITE_EXTERNAL_STORAGE")) {
+            adicionarDadosAoModel(model, "Armazenamento", teste_armazenamento);
+        }
+        if (permissoes.contains("WAKE_LOCK")) {
+            adicionarDadosAoModel(model, "Bloquear tela", teste_Bloquear_tela);
+        }
+        if (permissoes.contains("READ_PHONE_STATE")) {
+            adicionarDadosAoModel(model, "Atender ligação", teste_Atender_ligacao);
         }
 
-        model.addRow(new Object[]{"", "", ""});
-        model.addRow(new Object[]{"Resolução de dispositivo", "", ""});
-        for (int k = 0; k < teste_resolucao.length; k += 3) {
-            if (k + 2 < teste_resolucao.length) {
-                model.addRow(new Object[]{teste_resolucao[k], teste_resolucao[k + 1], teste_resolucao[k + 2]});
-            }
-        }*/
 
         JTable tabela = new JTable(model);
         Janelaresul.add(new JScrollPane(tabela));
@@ -299,13 +271,12 @@ public class TelaBase extends JFrame implements ActionListener {
         Janelaresul.setVisible(true);
     }
 
-    private void adicionarDadosAoModel(DefaultTableModel model, String titulo, String[] dados, List<String> permissoes, String permissao) {
-        if (permissoes.contains(permissao)) {
-            model.addRow(new Object[]{titulo, "", ""});
-            for (int k = 0; k < dados.length; k += 3) {
-                if (k + 2 < dados.length) {
-                    model.addRow(new Object[]{dados[k], dados[k + 1], dados[k + 2]});
-                }
+    private void adicionarDadosAoModel(DefaultTableModel model, String titulo, String[] dados) {
+        model.addRow(new Object[]{"", "", ""});
+        model.addRow(new Object[]{titulo, "", ""});
+        for (int k = 0; k < dados.length; k += 3) {
+            if (k + 2 < dados.length) {
+                model.addRow(new Object[]{dados[k], dados[k + 1], dados[k + 2]});
             }
         }
     }
