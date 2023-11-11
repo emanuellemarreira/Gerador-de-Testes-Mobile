@@ -221,6 +221,12 @@ public class TelaBase extends JFrame implements ActionListener {
                 "Nenhuma permissão de câmera concedida","Acesse um recurso que utiliza a câmera (por exemplo, tirar uma foto ou escanear um código QR)","A câmera deve ser ativada corretamente, e as imagens são processadas conforme esperado"
         };
 
+        String[] teste_Acessibilidade = {
+                "Geral - Recursos de acessibilidade ligada (ex: controles de interagao, correção de cor, texto em alto contraste, legendas ampliacao etc)", "Navegar pelo app", "Recursos de acessibilidade funcionarem corretamente junto com funcionalidades do app",
+                "Inversão de cores ligado", "Navegar pelo app", "Todos os textos e cores podem ser distinguidas",
+                "Correção de cores ligado", "Navegar pelo app", "Nenhum texto ou imagem é apagado",
+                "Text to speach", "Navegar pelo app", "A sequência de objetos lidos na tela segue uma sequência lógica e é possível navegar pelo app"};
+
         String[] teste_Bloquear_tela = {
                 "Acessar um módulo", "Apertar a tecla para bloquear a tela e entrar novamente", "Páginas, transições e informações serem carregadas normalmente"
         };
@@ -250,6 +256,7 @@ public class TelaBase extends JFrame implements ActionListener {
         if (permissoes.contains("CAMERA")) {
             adicionarDadosAoModel(model, "Camera", teste_camera);
         }
+        adicionarDadosAoModel(model, "Acessibilidade", teste_Acessibilidade);
         if (permissoes.contains("READ_EXTERNAL_STORAGE")||permissoes.contains("WRITE_EXTERNAL_STORAGE")) {
             adicionarDadosAoModel(model, "Armazenamento", teste_armazenamento);
         }
@@ -259,6 +266,7 @@ public class TelaBase extends JFrame implements ActionListener {
         if (permissoes.contains("READ_PHONE_STATE")) {
             adicionarDadosAoModel(model, "Atender ligação", teste_Atender_ligacao);
         }
+
 
 
         JTable tabela = new JTable(model);
