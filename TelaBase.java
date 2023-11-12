@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-
-
+import javax.swing.table.TableColumn;
+import javax.swing.table.DefaultTableCellRenderer;
 
 
 public class TelaBase extends JFrame implements ActionListener {
@@ -182,97 +182,130 @@ public class TelaBase extends JFrame implements ActionListener {
 
         }
     }
+
+    public void removeEmptyRows(DefaultTableModel model) {
+        for (int i = model.getRowCount() - 1; i >= 0; i--) {
+            boolean isEmpty = true;
+
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                Object value = model.getValueAt(i, j);
+                if (value != null && !value.toString().trim().isEmpty()) {
+                    isEmpty = false;
+                    break;
+                }
+            }
+
+            if (isEmpty) {
+                model.removeRow(i);
+            }
+        }
+    }
     private void gerarTextoTeste(List<String> permissoes) {
         setVisible(false);
         dispose();
         JFrame Janelaresul = new JFrame("RESULTADO TESTE");
         Janelaresul.setSize(1400, 600);
-        Janelaresul.setResizable(false);
         Janelaresul.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         String caminhoiconr = "imagens/Icones.png";
         ImageIcon imagemiconr = new ImageIcon(caminhoiconr);
         Janelaresul.setIconImage(imagemiconr.getImage());
 
-        String[] coluna = {"Pré-requisito", "Teste", "Resultado Esperado"};
+        String[] coluna = {"<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Pré-requisito</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Teste</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Resultado Esperado</div></body></html>"};
         DefaultTableModel model = new DefaultTableModel(0, coluna.length) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false; // Torna as células não editáveis
             }
         };
+
         for (int i = 0; i < coluna.length; i++) {
             model.setColumnIdentifiers(coluna);
         }
 
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setVerticalAlignment(SwingConstants.TOP);
+
+        JTable table = new JTable(model);
+        table.setDefaultRenderer(Object.class, renderer);
+
+        // Define a largura preferencial para cada linha
+        table.setRowHeight(50); // Defina a altura desejada para cada linha
+
+
+
+
+
+
+
+
 
         String[] teste_internet = {
-                "Wifi desligado"," Acessar app com 4G"," Páginas, transições e informações serem carregadas normalmente",
-                "Wifi desligado","Realizar operações no app com 4G", "Operações funcionarem normalmente",
-                "Wifi ligado", "Acessar um contexto e desligar o wifi enquanto navega", "Checar modais de erro de carregamento nas tela\n(''Falha ap carregar dados/página'')",
-                "Wifi ou G ligada","Alternar entre wifi e 4G enquanto navega pelo app","Páginas, transições e informações serem carregadas normalmente",
-                "Modo avião habilitado","Acessar app sem internet","Checar modais de erro de carregamentos nas telas (''Falha ao carregar dados/página'')",
-                "Modo avião habiltado", "Realizar operações no app sem internet", "Checar modais/telas de erro",
-                "Wifi/rede móvel ligado", "Acessar um contexto e desligar a rede móvel enquanto navega","Checar modais de erro de carregamentos nas telas (''Falha ao carregar dados/página'')",
-                "Wifi/Rede móvel desligado","Habilitar intemet e acessar app", "Ao clicar no botão de tentar novamente, os dados serem carregados normalmente",
-                "Wifi/Rede móvel desligado", "Habilitar internet e realizar operações no app", "Operações funcionarem normalmente"
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Wifi desligado</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Acessar app com 4G</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Páginas, transições e informações serem carregadas normalmente</div></body></html>",
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Wifi desligado</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Realizar operações no app com 4G</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Operações funcionarem normalmente</div></body></html>",
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Wifi ligado</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Acessar um contexto e desligar o wifi enquanto navega</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Checar modais de erro de carregamento nas tela (''Falha ao carregar dados/página'')</div></body></html>",
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Wifi ou G ligada</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Alternar entre wifi e 4G enquanto navega pelo app</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Páginas, transições e informações serem carregadas normalmente</div></body></html>",
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Modo avião habilitado</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Acessar app sem internet</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Checar modais de erro de carregamentos nas telas (''Falha ao carregar dados/página'')</div></body></html>",
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Modo avião habiltado</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Realizar operações no app sem internet</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Checar modais/telas de erro</div></body></html>",
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Wifi/rede móvel ligado</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Acessar um contexto e desligar a rede móvel enquanto navega</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Checar modais de erro de carregamentos nas telas (''Falha ao carregar dados/página'')</div></body></html>",
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Wifi/Rede móvel desligado</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Habilitar intemet e acessar app</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Ao clicar no botão de tentar novamente, os dados serem carregados normalmente</div></body></html>",
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Wifi/Rede móvel desligado</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Habilitar internet e realizar operações no app</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Operações funcionarem normalmente</div></body></html>"
         };
 
         String[] teste_camera = {
-                "Nenhuma permissão de câmera concedida","Acesse um recurso que utiliza a câmera (por exemplo, tirar uma foto ou escanear um código QR)","A câmera deve ser ativada corretamente, e as imagens são processadas conforme esperado"
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Nenhuma permissão de câmera concedida</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Acesse um recurso que utiliza a câmera (por exemplo, tirar uma foto ou escanear um código QR)</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>A câmera deve ser ativada corretamente, e as imagens são processadas conforme esperado</div></body></html>"
         };
 
         String[] teste_Acessibilidade = {
-                "Geral - Recursos de acessibilidade ligada (ex: controles de interagao, correção de cor, texto em alto contraste, legendas ampliacao etc)", "Navegar pelo app", "Recursos de acessibilidade funcionarem corretamente junto com funcionalidades do app",
-                "Inversão de cores ligado", "Navegar pelo app", "Todos os textos e cores podem ser distinguidas",
-                "Correção de cores ligado", "Navegar pelo app", "Nenhum texto ou imagem é apagado",
-                "Text to speach", "Navegar pelo app", "A sequência de objetos lidos na tela segue uma sequência lógica e é possível navegar pelo app"};
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 9px; color: black;'>Geral - Recursos de acessibilidade ligada (ex: controles de interagao, correção de cor, texto em alto contraste, legendas ampliação etc)</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Navegar pelo app</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Recursos de acessibilidade funcionarem corretamente junto com funcionalidades do app</div></body></html>",
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Inversão de cores ligado</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Navegar pelo app</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Todos os textos e cores podem ser distinguidas</div></body></html>",
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Correção de cores ligado</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Navegar pelo app</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Nenhum texto ou imagem é apagado</div></body></html>",
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Text to speach</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Navegar pelo app</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>A sequência de objetos lidos na tela segue uma sequência lógica e é possível navegar pelo app</div></body></html>"};
 
         String[] teste_Bloquear_tela = {
-                "Acessar um módulo", "Apertar a tecla para bloquear a tela e entrar novamente", "Páginas, transições e informações serem carregadas normalmente"
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Acessar um módulo</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Apertar a tecla para bloquear a tela e entrar novamente</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Páginas, transições e informações serem carregadas normalmente</div></body></html>"
         };
 
         String[] teste_armazenamento = {
-                "Nenhuma permissão de armazenamento externo concedida"," Realize operações que envolvam leitura e gravação de arquivos no armazenamento externo do dispositivo","O aplicativo deve lidar corretamente com permissões de armazenamento, permitindo a leitura e gravação de arquivos externos"
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Nenhuma permissão de armazenamento externo concedida</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Realize operações que envolvam leitura e gravação de arquivos no armazenamento externo do dispositivo</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>O aplicativo deve lidar corretamente com permissões de armazenamento, permitindo a leitura e gravação de arquivos externos</div></body></html>"
         };
 
 
         String[] teste_Atender_ligacao = {
-                "Acessar um módulo" ,"Receber uma ligação, deixar tocar e depois voltar para o app", "Quando voltamos para o app depois da ligação, continuamos na mesma tela e no mesmo estado que originalmente deixamos a app (seja logado ou não e independentemente da tela/ação que estávamos fazendo), - Verificar que a ligação está sobrepondo a aplicação (não está apenas no modal superior)",
-                "Acessar um módulo", "Receber uma ligação, atender e depois voltar para o app", "Quando voltamos para o app depois da ligação, continuamos na mesma tela e no mesmo estado que originalmente deixamos a app (seja logado ou não e independentemente da tela/ação que estávamos fazendo), Quando a ligação é atendida e colocada no ouvido, a aplicação não está sendo mantida na tela e não estamos mexendo nela sem saber",
-                "Acessar um módulo", "Receber uma ligação, recusar chamada e depois voltar para o app", "Quando voltamos para o app depois da ligação, continuamos na mesma tela e no mesmo estado que originalmente deixamos a app (seja logado ou não e independentemente da tela/ação que estávamos fazendo)"
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Acessar um módulo</div></body></html>" ,"<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Receber uma ligação, deixar tocar e depois voltar para o app</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Quando voltamos para o app depois da ligação, continuamos na mesma tela e no mesmo estado que originalmente deixamos a app (seja logado ou não e independentemente da tela/ação que estávamos fazendo), - Verificar que a ligação está sobrepondo a aplicação (não está apenas no modal superior)</div></body></html>",
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Acessar um módulo</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Receber uma ligação, atender e depois voltar para o app</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Quando voltamos para o app depois da ligação, continuamos na mesma tela e no mesmo estado que originalmente deixamos a app (seja logado ou não e independentemente da tela/ação que estávamos fazendo), Quando a ligação é atendida e colocada no ouvido, a aplicação não está sendo mantida na tela e não estamos mexendo nela sem saber</div></body></html>",
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Acessar um módulo</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Receber uma ligação, recusar chamada e depois voltar para o app</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Quando voltamos para o app depois da ligação, continuamos na mesma tela e no mesmo estado que originalmente deixamos a app (seja logado ou não e independentemente da tela/ação que estávamos fazendo)</div></body></html>"
 
         };
 
         String[] teste_localizacao = {
-                "Nenhuma permissão de localização concedida","Acesse um módulo que utiliza a localização","A aplicação deve solicitar permissões de localização e obter a localização correta do dispositivo"
+                "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Nenhuma permissão de localização concedida</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Acesse um módulo que utiliza a localização</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>A aplicação deve solicitar permissões de localização e obter a localização correta do dispositivo</div></body></html>"
                 };
 
         if (permissoes.contains("INTERNET") || permissoes.contains("ACCESS_NETWORK_STATE") || permissoes.contains("CHANGE_NETWORK_STATE")) {
-            adicionarDadosAoModel(model, "Internet", teste_internet);
+            adicionarDadosAoModel(model, "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Internet</div></body></html>", teste_internet);
         }
         if (permissoes.contains("ACCESS_FINE_LOCATION")||permissoes.contains("ACCESS_COARSE_LOCATION")) {
-            adicionarDadosAoModel(model, "Localização", teste_localizacao);
+            adicionarDadosAoModel(model, "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Localização</div></body></html>", teste_localizacao);
         }
         if (permissoes.contains("CAMERA")) {
-            adicionarDadosAoModel(model, "Camera", teste_camera);
+            adicionarDadosAoModel(model, "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Camera</div></body></html>", teste_camera);
         }
-        adicionarDadosAoModel(model, "Acessibilidade", teste_Acessibilidade);
+        adicionarDadosAoModel(model, "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Acessibilidade</div></body></html>", teste_Acessibilidade);
         if (permissoes.contains("READ_EXTERNAL_STORAGE")||permissoes.contains("WRITE_EXTERNAL_STORAGE")) {
-            adicionarDadosAoModel(model, "Armazenamento", teste_armazenamento);
+            adicionarDadosAoModel(model, "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Armazenamento</div></body></html>", teste_armazenamento);
         }
         if (permissoes.contains("WAKE_LOCK")) {
-            adicionarDadosAoModel(model, "Bloquear tela", teste_Bloquear_tela);
+            adicionarDadosAoModel(model, "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Bloquear tela</div></body></html>", teste_Bloquear_tela);
         }
         if (permissoes.contains("READ_PHONE_STATE")) {
-            adicionarDadosAoModel(model, "Atender ligação", teste_Atender_ligacao);
+            adicionarDadosAoModel(model, "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Atender ligação</div></body></html>", teste_Atender_ligacao);
         }
 
 
+        removeEmptyRows(model);
+        Janelaresul.add(new JScrollPane(table));
 
-        JTable tabela = new JTable(model);
-        Janelaresul.add(new JScrollPane(tabela));
-
-        JScrollPane scrollPane = new JScrollPane(tabela);
+        JScrollPane scrollPane = new JScrollPane(table);
         Janelaresul.add(scrollPane);
 
         Janelaresul.setLocationRelativeTo(null);
