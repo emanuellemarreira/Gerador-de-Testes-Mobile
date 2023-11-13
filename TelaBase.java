@@ -2,6 +2,7 @@ package teste;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -9,9 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.*;
 
 
 public class TelaBase extends JFrame implements ActionListener {
@@ -22,7 +21,7 @@ public class TelaBase extends JFrame implements ActionListener {
 
 
     public TelaBase() {
-        setTitle("Gerador de testes para aplicativos mobile");
+        setTitle("GERADOR DE TESTES PARA APLICATIVOS MOBILE");
         setBounds(300, 300, 650, 175);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -200,6 +199,22 @@ public class TelaBase extends JFrame implements ActionListener {
             }
         }
     }
+
+    public class CustomTableHeader extends JTableHeader {
+        private int headerHeight; // Altura desejada do cabeçalho
+
+        public CustomTableHeader(TableColumnModel columnModel, int headerHeight) {
+            super(columnModel);
+            this.headerHeight = headerHeight;
+        }
+
+        @Override
+        public Dimension getPreferredSize() {
+            Dimension defaultSize = super.getPreferredSize();
+            return new Dimension(defaultSize.width, headerHeight);
+        }
+    }
+
     private void gerarTextoTeste(List<String> permissoes) {
         setVisible(false);
         dispose();
@@ -210,7 +225,7 @@ public class TelaBase extends JFrame implements ActionListener {
         ImageIcon imagemiconr = new ImageIcon(caminhoiconr);
         Janelaresul.setIconImage(imagemiconr.getImage());
 
-        String[] coluna = {"<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Pré-requisito</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Teste</div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Resultado Esperado</div></body></html>"};
+        String[] coluna = {"<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: white;'><b>Pré-requisito<b></div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: white;'><b>Teste<b></div></body></html>", "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: white;'><b>Resultado Esperado<b></div></body></html>"};
         DefaultTableModel model = new DefaultTableModel(0, coluna.length) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -228,16 +243,22 @@ public class TelaBase extends JFrame implements ActionListener {
         JTable table = new JTable(model);
         table.setDefaultRenderer(Object.class, renderer);
 
-        // Define a largura preferencial para cada linha
-        table.setRowHeight(50); // Defina a altura desejada para cada linha
+        table.setRowHeight(50);
 
+        MyTableCellRenderer cellRenderer = new MyTableCellRenderer();
 
+        int[] columnIndices = {0, 1, 2}; // Substitua pelo índice da coluna desejada
+        for (int columnIndex : columnIndices) {
+            table.getColumnModel().getColumn(columnIndex).setCellRenderer(cellRenderer);
+        }
 
+        CustomTableHeader tableHeader = new CustomTableHeader(table.getColumnModel(), 50);
+        tableHeader.setDefaultRenderer(new CustomTableHeaderRenderer());
 
+        tableHeader.setDefaultRenderer(new CustomTableHeaderRenderer());
 
-
-
-
+        table.setTableHeader(tableHeader);
+        tableHeader.setReorderingAllowed(false);
 
         String[] teste_internet = {
                 "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Wifi desligado</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Acessar app com 4G</div></body></html>","<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Páginas, transições e informações serem carregadas normalmente</div></body></html>",
@@ -310,6 +331,38 @@ public class TelaBase extends JFrame implements ActionListener {
 
         Janelaresul.setLocationRelativeTo(null);
         Janelaresul.setVisible(true);
+    }
+
+    class MyTableCellRenderer extends DefaultTableCellRenderer {
+
+        public MyTableCellRenderer() {
+            setVerticalAlignment(SwingConstants.TOP); // Define o alinhamento vertical no topo
+        }
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            if (row == 0 || row == 10 || row == 12) {
+                setBackground(Color.CYAN);
+            } else {
+                // Defina a cor de fundo padrão para outras linhas
+                setBackground(table.getBackground());
+            }
+
+            return this;
+        }
+    }
+
+    public class CustomTableHeaderRenderer extends DefaultTableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            // Defina a cor de fundo do cabeçalho aqui
+            component.setBackground(Color.BLACK); // Substitua pela cor desejada
+
+            return component;
+        }
     }
 
     private void adicionarDadosAoModel(DefaultTableModel model, String titulo, String[] dados) {
