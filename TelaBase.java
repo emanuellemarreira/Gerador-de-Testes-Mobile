@@ -252,9 +252,7 @@ public class TelaBase extends JFrame implements ActionListener {
             table.getColumnModel().getColumn(columnIndex).setCellRenderer(cellRenderer);
         }
 
-        CustomTableHeader tableHeader = new CustomTableHeader(table.getColumnModel(), 50);
-        tableHeader.setDefaultRenderer(new CustomTableHeaderRenderer());
-
+        CustomTableHeader tableHeader = new CustomTableHeader(table.getColumnModel(), 40);
         tableHeader.setDefaultRenderer(new CustomTableHeaderRenderer());
 
         table.setTableHeader(tableHeader);
@@ -343,7 +341,7 @@ public class TelaBase extends JFrame implements ActionListener {
             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
             if (row == 0 || row == 10 || row == 12) {
-                setBackground(Color.CYAN);
+                setBackground(Color.GREEN);
             } else {
                 // Defina a cor de fundo padrão para outras linhas
                 setBackground(table.getBackground());
@@ -354,6 +352,9 @@ public class TelaBase extends JFrame implements ActionListener {
     }
 
     public class CustomTableHeaderRenderer extends DefaultTableCellRenderer {
+        public CustomTableHeaderRenderer() {
+            setVerticalAlignment(SwingConstants.TOP); // Alinhe o texto no topo
+        }
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
