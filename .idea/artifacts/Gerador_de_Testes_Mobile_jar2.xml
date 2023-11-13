@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Gerador-de-Testes-Mobile:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/Gerador_de_Testes_Mobile_jar2</output-path>
+    <root id="archive" name="Gerador-de-Testes-Mobile.jar">
+      <element id="module-output" name="Gerador-de-Testes-Mobile" />
+    </root>
+  </artifact>
+</component>
