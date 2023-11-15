@@ -21,7 +21,7 @@ public class TelaBase extends JFrame implements ActionListener {
 
 
     public TelaBase() {
-        setTitle("GERADOR DE TESTES PARA APLICATIVOS MOBILE");
+        setTitle("Gerador de testes para aplicativos Android mobile");
         setBounds(300, 300, 650, 175);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -125,33 +125,6 @@ public class TelaBase extends JFrame implements ActionListener {
         Janelaso.setLocationRelativeTo(null);
         Janelaso.setVisible(true);
     }
-    //buscando o arquivo manifest
-   /* private void buscarAndroidManifest() {
-        String selectedFolderPath = textField.getText();
-        if (!selectedFolderPath.isEmpty()) {
-            File folder = new File(selectedFolderPath);
-            File[] files = folder.listFiles();
-
-            if (files != null) {
-                boolean manifestFound = false;
-                for (File file : files) {
-                    if (file.isFile() && file.getName().equalsIgnoreCase("AndroidManifest.xml")) {
-                        manifestFound = true;
-                        System.out.println("Arquivo AndroidManifest.xml encontrado em: " + file.getAbsolutePath());
-                        GfgXmlExtractor.pegarmanifest(file.getAbsolutePath());
-                        break;
-                    }
-                }
-                if (!manifestFound) {
-                    JOptionPane.showMessageDialog(this, "Nenhum arquivo AndroidManifest.xml encontrado na pasta selecionada.");
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "A pasta selecionada está vazia.");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, selecione uma pasta antes de buscar o arquivo AndroidManifest.xml.");
-        }
-    }*/
 
     private void extrairPermissoesDoManifest(String caminhoManifest) {
         List<String> permissoes = new ArrayList<>();
@@ -218,8 +191,8 @@ public class TelaBase extends JFrame implements ActionListener {
     private void gerarTextoTeste(List<String> permissoes) {
         setVisible(false);
         dispose();
-        JFrame Janelaresul = new JFrame("RESULTADO TESTE");
-        Janelaresul.setSize(1400, 600);
+        JFrame Janelaresul = new JFrame("Testes Sugeridos");
+        Janelaresul.setSize(1300, 600);
         Janelaresul.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         String caminhoiconr = "imagens/Icones.png";
         ImageIcon imagemiconr = new ImageIcon(caminhoiconr);
@@ -307,7 +280,7 @@ public class TelaBase extends JFrame implements ActionListener {
             adicionarDadosAoModel(model, "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Localização</div></body></html>", teste_localizacao);
         }
         if (permissoes.contains("CAMERA")) {
-            adicionarDadosAoModel(model, "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Camera</div></body></html>", teste_camera);
+            adicionarDadosAoModel(model, "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Câmera</div></body></html>", teste_camera);
         }
         adicionarDadosAoModel(model, "<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Acessibilidade</div></body></html>", teste_Acessibilidade);
         if (permissoes.contains("READ_EXTERNAL_STORAGE")||permissoes.contains("WRITE_EXTERNAL_STORAGE")) {
