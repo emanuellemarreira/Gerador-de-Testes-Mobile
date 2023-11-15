@@ -331,20 +331,25 @@ public class TelaBase extends JFrame implements ActionListener {
         Janelaresul.setVisible(true);
     }
 
-    class MyTableCellRenderer extends DefaultTableCellRenderer {
+    public class MyTableCellRenderer extends DefaultTableCellRenderer {
 
         public MyTableCellRenderer() {
-            setVerticalAlignment(SwingConstants.TOP); // Define o alinhamento vertical no topo
+            setVerticalAlignment(SwingConstants.TOP);
         }
+
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-            if (row == 0 || row == 10 || row == 12) {
+            // Obtém o valor da célula na linha e coluna específicas
+            Object cellValue = table.getValueAt(row, 0);
+
+            if (cellValue != null && cellValue.toString().equals("<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Internet</div></body></html>") || cellValue.toString().equals("<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Localização</div></body></html>") || cellValue.toString().equals("<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Camera</div></body></html>") || cellValue.toString().equals("<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Acessibilidade</div></body></html>") || cellValue.toString().equals("<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Armazenamento</div></body></html>") || cellValue.toString().equals("<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Bloquear tela</div></body></html>") || cellValue.toString().equals("<html><body><div style='text-align: left; font-family: Dialog; font-size: 10px; color: black;'>Atender ligação</div></body></html>")) {
+                // Se contiver a palavra, pinte toda a linha de verde
                 setBackground(Color.GREEN);
             } else {
-                // Defina a cor de fundo padrão para outras linhas
-                setBackground(table.getBackground());
+                // Caso contrário, defina a cor de fundo padrão para outras linhas
+                setBackground(Color.WHITE);
             }
 
             return this;
@@ -353,14 +358,13 @@ public class TelaBase extends JFrame implements ActionListener {
 
     public class CustomTableHeaderRenderer extends DefaultTableCellRenderer {
         public CustomTableHeaderRenderer() {
-            setVerticalAlignment(SwingConstants.TOP); // Alinhe o texto no topo
+            setVerticalAlignment(SwingConstants.TOP);
         }
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-            // Defina a cor de fundo do cabeçalho aqui
-            component.setBackground(Color.BLACK); // Substitua pela cor desejada
+            component.setBackground(Color.BLACK);
 
             return component;
         }
